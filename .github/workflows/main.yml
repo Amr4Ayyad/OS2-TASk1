@@ -1,1 +1,22 @@
+on:
+  push:
+    branches:
+      - master
+    
 
+
+
+
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Login to Docker hub"
+        run: docker login --username ${{ secrests.DOCKER_USERNAME }} --password ${{ secrests.DOCKER_TOKEN }}
+      - name: "Building docker java image"
+        run: docker build -t ${{ secrests.DOCKER_USERNAME }}/myJavaimage .
+      - name: "Pushing to Dockerr"
+        run: docker push ${{ secrests.DOCKER_USERNAME }}/myJavaimage
